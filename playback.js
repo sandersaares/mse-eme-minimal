@@ -8,13 +8,11 @@ async function InitializePlayer() {
 
     videoElement.src = window.URL.createObjectURL(mediaSource);
 
-    // Must contain initialization segment and at least 1 media segment.
     var videoSegments = [
         "media/video-cbcs/init.mp4",
         "media/video-cbcs/media.mp4"
     ];
 
-    // Must contain initialization segment and at least 1 media segment.
     var audioSegments = [
         "media/audio-cbcs/init.mp4",
         "media/audio-cbcs/media.mp4"
