@@ -1,41 +1,30 @@
-﻿using System;
-using System.IO;
+﻿using Koek;
+using System;
 
 namespace ConsoleApp22
 {
+    // Converts kid/key from GUID/base64 to the Clear Key base64url/base64url format.
     class Program
     {
         static void Main(string[] args)
         {
-            var filesList = @"
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0001.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0002.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0003.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0004.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0005.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0006.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0007.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0008.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0009.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0010.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0011.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0012.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0013.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0014.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0015.m4s
-c:\Users\sasaares\OneDrive\Asdf\encrypted\out\audio_out2\Encrypted_Cbcs\1\0016.m4s
-";
+            // audio
+            var kid = new Guid("87dc5c00-a7ca-4230-90f0-2995abd9f3bf");
+            var key64 = "wTv15KZkRq2EJOWQhxQnog==";
 
-            var files = filesList.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            // video
+            //var kid = new Guid("0a409770-9ea1-40d0-b937-39867584fee6");
+            //var key64 = "OjOf9CpXfjPuqBiA8nVtdA==";
 
-            using var outFile = File.Create("media.mp4");
+            var kidBytes = kid.ToBigEndianByteArray();
+            var kid64url = Helpers.Convert.ByteArrayToBase64Url(kidBytes);
 
-            foreach (var inFile in files)
-            {
-                using var inStream = File.OpenRead(inFile);
+            Console.WriteLine($"KID: {kid64url}");
 
-                inStream.CopyTo(outFile);
-            }
+            var keyBytes = Convert.FromBase64String(key64);
+            var key64Url = Helpers.Convert.ByteArrayToBase64Url(keyBytes);
+
+            Console.WriteLine($"Key: {key64Url}");
         }
     }
 }
