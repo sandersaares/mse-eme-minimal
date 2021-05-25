@@ -1,7 +1,7 @@
 ﻿using Koek;
 using System;
 
-namespace ConsoleApp22
+namespace ConsoleApp21
 {
     // Converts kid/key from GUID/base64 to the Clear Key base64url/base64url format.
     class Program
